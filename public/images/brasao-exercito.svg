@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Brasao estilizado</title>
+  <desc id="desc">Icone em formato de escudo inspirado nas cores do Exercito Brasileiro.</desc>
+  <defs>
+    <linearGradient id="shield" x1="24" x2="104" y1="12" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1f8f45"/>
+      <stop offset="0.48" stop-color="#0f6d35"/>
+      <stop offset="1" stop-color="#064b27"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="30" x2="98" y1="18" y2="104" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe68a"/>
+      <stop offset="1" stop-color="#c9971a"/>
+    </linearGradient>
+  </defs>
+  <path fill="#07121d" d="M64 6 16 22v38c0 30 19 52 48 62 29-10 48-32 48-62V22L64 6Z"/>
+  <path fill="url(#shield)" d="M64 13 24 27v33c0 25 15 44 40 54 25-10 40-29 40-54V27L64 13Z"/>
+  <path fill="none" stroke="url(#gold)" stroke-width="6" d="M64 20 31 31v29c0 21 12 37 33 46 21-9 33-25 33-46V31L64 20Z"/>
+  <path fill="#f8fafc" d="m64 27 5.1 15.6h16.4L72.2 52.2l5.1 15.6L64 58.2 50.7 67.8l5.1-15.6-13.3-9.6h16.4L64 27Z"/>
+  <path fill="url(#gold)" d="M60 44h8v50h-8z"/>
+  <path fill="#f8fafc" d="M45 78h38v8H45z"/>
+  <path fill="url(#gold)" d="m64 88 18 14H46l18-14Z"/>
+  <circle cx="64" cy="77" r="8" fill="#07121d" stroke="url(#gold)" stroke-width="4"/>
+</svg>

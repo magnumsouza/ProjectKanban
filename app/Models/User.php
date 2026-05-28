@@ -7,6 +7,9 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Group;
 
 class User extends Authenticatable
 {
@@ -22,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -45,5 +49,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class, 'group_user')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class, 'created_by');
     }
 }

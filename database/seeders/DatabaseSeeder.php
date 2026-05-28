@@ -15,11 +15,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'Administrador DTI',
+            'email' => 'admin@dtikanban.local',
+            'password' => 'Admin123!',
+            'is_admin' => true,
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Usuário Padrão',
+            'email' => 'user@dtikanban.local',
+            'password' => 'User12345',
         ]);
+
+        $this->call([GroupSeeder::class]);
     }
 }
