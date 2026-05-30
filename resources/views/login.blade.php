@@ -37,8 +37,9 @@
         input:focus { background: rgba(255,255,255,.1); border-color: rgba(56,189,248,.45); }
         .actions { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 4px; }
         .actions a { color: #7dd3fc; text-decoration: none; font-weight: 600; }
-        .button { width: 100%; border: none; border-radius: 18px; padding: 16px 18px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); color: #07121d; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform .2s ease, filter .2s ease; }
-        .button:hover { transform: translateY(-1px); filter: brightness(1.04); }
+        .button { width: 100%; border: none; border-radius: 18px; padding: 16px 18px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); color: #07121d; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform .2s ease, filter .2s ease, box-shadow .2s ease; }
+        .button:hover { transform: translateY(-1px); filter: brightness(1.12) saturate(1.08); box-shadow: 0 16px 34px rgba(14,165,233,.22); }
+        .button:focus-visible { outline: 3px solid rgba(56,189,248,.35); outline-offset: 3px; }
         .auxiliary { margin-top: 28px; padding: 22px; border-radius: 22px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
         .auxiliary p { margin: 0; color: #cbd5e1; font-size: .95rem; }
         .auxiliary a { color: #bae6fd; text-decoration: none; font-weight: 700; }

@@ -12,22 +12,51 @@
         * { box-sizing: border-box; }
         body { margin:0; min-height:100vh; font-family:Inter,system-ui,sans-serif; background:linear-gradient(180deg,#07121d 0%,#081830 40%,#060b15 100%); color:var(--text); }
         [data-theme="light"] body { background:linear-gradient(180deg,#f8fbff 0%,#eef6ff 45%,#f1f5f9 100%); }
-        .page { width:100%; max-width:1460px; margin:0 auto; padding:28px 28px 44px; }
-        .topbar { display:flex; flex-wrap:wrap; justify-content:space-between; gap:18px; align-items:center; margin-bottom:28px; }
-        .topbar h1 { margin:0; font-size:clamp(2rem,2.5vw,3.2rem); line-height:1.02; }
-        .topbar small, .muted { color:var(--text-muted); }
-        .action-group, .group-links { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
-        .group-links { margin-top:12px; gap:8px; }
+        .page { width:100%; max-width:1500px; margin:0 auto; padding:18px 24px 44px; }
+        .navbar { position:sticky; top:0; z-index:20; display:grid; grid-template-columns:minmax(230px,.8fr) auto auto; gap:18px; align-items:center; padding:14px 16px; margin:0 0 18px; border:1px solid var(--border); border-radius:22px; background:rgba(8,18,29,.92); box-shadow:var(--shadow-soft); backdrop-filter:blur(16px); }
+        [data-theme="light"] .navbar { background:rgba(255,255,255,.92); }
+        .brand-block { display:flex; align-items:center; gap:12px; min-width:0; }
+        .brand-mark { width:48px; height:48px; display:grid; place-items:center; border-radius:14px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); flex:0 0 auto; }
+        .brand-mark img { width:40px; height:40px; object-fit:contain; display:block; }
+        .brand-copy { min-width:0; }
+        .brand-copy h1 { margin:0; font-size:1.34rem; line-height:1.1; }
+        .brand-copy small, .muted { color:var(--text-muted); }
+        .navbar-section { min-width:0; position:relative; }
+        .navbar-label { display:block; margin:0 0 8px; color:var(--text-muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; }
+        .action-group, .group-links { display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
+        .navbar-actions { justify-content:flex-end; }
+        .groups-menu-button { min-width:190px; justify-content:space-between; }
+        .groups-dropdown { position:absolute; top:calc(100% + 10px); right:0; width:min(360px,calc(100vw - 32px)); max-height:360px; overflow:auto; padding:12px; border:1px solid var(--border); border-radius:18px; background:rgba(8,18,29,.98); box-shadow:0 24px 60px rgba(0,0,0,.28); display:none; }
+        [data-theme="light"] .groups-dropdown { background:rgba(255,255,255,.98); }
+        .navbar-section.open .groups-dropdown { display:block; }
+        .group-links { display:grid; gap:8px; }
         .group-link { display:inline-flex; padding:8px 12px; border-radius:999px; border:1px solid rgba(56,189,248,.18); color:var(--accent); background:rgba(56,189,248,.08); text-decoration:none; font-size:.88rem; font-weight:700; }
-        .button-primary, .button-secondary { font:inherit; display:inline-flex; align-items:center; justify-content:center; gap:10px; border-radius:999px; padding:14px 20px; cursor:pointer; text-decoration:none; }
+        .button-primary, .button-secondary { font:inherit; display:inline-flex; align-items:center; justify-content:center; gap:10px; border-radius:999px; padding:14px 20px; cursor:pointer; text-decoration:none; transition:background .2s ease, border-color .2s ease, color .2s ease, filter .2s ease, transform .2s ease, box-shadow .2s ease; }
         .button-primary { border:0; background:var(--button-bg); color:var(--button-text); font-weight:800; text-transform:uppercase; }
         .button-secondary { border:1px solid var(--panel-border); background:rgba(255,255,255,.08); color:var(--text); }
-        .board { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+        .button-primary:hover { filter:brightness(1.12) saturate(1.08); transform:translateY(-1px); box-shadow:0 16px 34px rgba(14,165,233,.22); }
+        .button-secondary:hover { background:rgba(56,189,248,.16); border-color:rgba(56,189,248,.42); color:#dff7ff; transform:translateY(-1px); }
+        .button-primary:focus-visible, .button-secondary:focus-visible { outline:3px solid rgba(56,189,248,.35); outline-offset:3px; }
+        .workspace-header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; margin:0 0 18px; padding:0 4px; color:var(--text-muted); }
+        .workspace-header strong { color:var(--text); }
+        .filters { display:grid; grid-template-columns:minmax(200px,1.35fr) repeat(4,minmax(132px,1fr)) auto; gap:10px; align-items:end; margin:0 0 16px; padding:12px; border:1px solid var(--border); border-radius:18px; background:rgba(8,18,29,.72); box-shadow:var(--shadow-soft); }
+        [data-theme="light"] .filters { background:rgba(255,255,255,.84); }
+        .filter-field { display:grid; gap:5px; min-width:0; }
+        .filter-field label { margin:0; }
+        .filters input, .filters select { padding:9px 11px; border-radius:12px; font-size:.88rem; }
+        .filters .button-secondary { padding:10px 14px; min-height:40px; }
+        .board { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; align-items:start; }
         .column { background:linear-gradient(180deg,var(--surface-light),var(--surface)); border:1px solid var(--border); border-radius:24px; padding:20px; min-height:560px; display:flex; flex-direction:column; box-shadow:var(--shadow-soft); }
         .column h2 { margin:0 0 6px; font-size:1.05rem; }
         .column small { color:var(--text-muted); font-size:.92rem; }
+        .column-title { display:flex; justify-content:space-between; gap:10px; align-items:center; }
+        .column-count { display:inline-flex; min-width:34px; height:28px; align-items:center; justify-content:center; border-radius:999px; background:rgba(56,189,248,.1); border:1px solid rgba(56,189,248,.18); color:var(--accent); font-weight:900; font-size:.82rem; }
         .column-body { flex:1; display:grid; gap:16px; align-content:start; margin-top:18px; }
         .task-card { background:var(--card-bg); border:1px solid rgba(148,163,184,.12); border-radius:18px; padding:18px; box-shadow:var(--shadow-soft); }
+        .task-card.status-nao-iniciado-card { background:linear-gradient(180deg,rgba(56,189,248,.16),var(--card-bg)); border-color:rgba(56,189,248,.34); }
+        .task-card.status-em-andamento-card { background:linear-gradient(180deg,rgba(251,191,36,.16),var(--card-bg)); border-color:rgba(251,191,36,.34); }
+        .task-card.status-prorrogado-card { background:linear-gradient(180deg,rgba(248,113,113,.16),var(--card-bg)); border-color:rgba(248,113,113,.34); }
+        .task-card.status-concluido-card { background:linear-gradient(180deg,rgba(52,211,153,.16),var(--card-bg)); border-color:rgba(52,211,153,.34); }
         .task-card[data-editable="true"] { cursor:grab; }
         .task-card h3 { margin:0 0 10px; font-size:1.02rem; line-height:1.3; }
         .task-card p { margin:0 0 14px; color:var(--text-muted); line-height:1.65; font-size:.94rem; }
@@ -52,8 +81,8 @@
         textarea { resize:vertical; min-height:110px; }
         .modal footer { margin-top:24px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
         .overlay-close { position:absolute; top:18px; right:18px; width:38px; height:38px; border:0; border-radius:50%; background:rgba(148,163,184,.12); color:var(--text); cursor:pointer; }
-        @media (max-width:1024px) { .board { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-        @media (max-width:720px) { .board, .form-grid { grid-template-columns:1fr; } .topbar { align-items:stretch; } .button-primary, .button-secondary { width:100%; } }
+        @media (max-width:1120px) { .navbar { grid-template-columns:1fr; align-items:stretch; } .navbar-actions { justify-content:flex-start; } .groups-dropdown { left:0; right:auto; } .filters { grid-template-columns:repeat(2,minmax(0,1fr)); } .board { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media (max-width:720px) { .page { padding:12px 12px 30px; } .board, .form-grid, .filters { grid-template-columns:1fr; } .button-primary, .button-secondary { width:100%; } .action-group { width:100%; } .navbar { border-radius:18px; } }
     </style>
 </head>
 <body>
@@ -64,24 +93,37 @@
         $editableGroups = collect($shareGroups ?? []);
     @endphp
     <div class="page">
-        <div class="topbar">
-            <div>
-                <h1>DTI SISKanban</h1>
-                <small>Cada usuario ve suas criacoes e o que foi compartilhado por grupo.</small>
-                <div style="margin-top:10px; color:var(--text-muted);">Ola, {{ $loggedUser['name'] }} {{ $isAdmin ? '(Administrador)' : '' }}</div>
-                @if($availableGroups->isNotEmpty())
-                    <div class="group-links">
-                        @foreach($availableGroups as $availableGroup)
-                            <a class="group-link" href="{{ url('/kanban/'.$availableGroup['slug']) }}">{{ $availableGroup['name'] }} - {{ $availableGroup['role'] }}</a>
-                        @endforeach
-                    </div>
-                @endif
+        <nav class="navbar" aria-label="Navegacao principal">
+            <div class="brand-block">
+                <span class="brand-mark"><img src="{{ asset('images/brasao-exercito.svg') }}" alt="Brasao"></span>
+                <div class="brand-copy">
+                    <h1>DTI SISKanban</h1>
+                    <small>Controle de tarefas e grupos</small>
+                </div>
             </div>
-            <div class="action-group">
+
+            <div class="navbar-section">
+                <button class="button-secondary groups-menu-button" id="groupsMenuButton" type="button" aria-expanded="false" aria-controls="groupsDropdown">
+                    Grupos <span>{{ $availableGroups->count() }}</span>
+                </button>
+                <div class="groups-dropdown" id="groupsDropdown">
+                    <span class="navbar-label">Grupos vinculados</span>
+                    <div class="group-links">
+                        @forelse($availableGroups as $availableGroup)
+                            <a class="group-link" href="{{ url('/kanban/'.$availableGroup['slug']) }}">{{ $availableGroup['name'] }} - {{ $availableGroup['role'] }}</a>
+                        @empty
+                            <span class="muted">Nenhum grupo vinculado</span>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-group navbar-actions">
                 <button class="button-primary" id="openAddTaskModal">Adicionar tarefa</button>
                 <button class="button-secondary" id="themeToggle" aria-label="Alternar tema">Tema</button>
                 <a href="{{ url('/groups') }}" class="button-secondary">Grupos</a>
                 @if($isAdmin)
+                    <a href="{{ url('/dashboard') }}" class="button-secondary">Dashboard</a>
                     <a href="{{ url('/admin/users') }}" class="button-secondary">Usuarios</a>
                 @endif
                 <form method="POST" action="{{ url('/logout') }}" style="margin:0; display:inline-flex;">
@@ -89,13 +131,60 @@
                     <button class="button-secondary" type="submit">Sair</button>
                 </form>
             </div>
+        </nav>
+
+        <div class="workspace-header">
+            <div>Ola, <strong>{{ $loggedUser['name'] }}</strong> {{ $isAdmin ? '(Administrador)' : '' }}</div>
+            <div>Cada usuario ve suas criacoes e o que foi compartilhado por grupo.</div>
         </div>
 
+        <section class="filters" aria-label="Filtros do Kanban">
+            <div class="filter-field">
+                <label for="filterSearch">Buscar</label>
+                <input id="filterSearch" type="search" placeholder="Titulo, descricao, secao...">
+            </div>
+            <div class="filter-field">
+                <label for="filterGroup">Grupo</label>
+                <select id="filterGroup">
+                    <option value="all">Todos</option>
+                    <option value="private">Privadas</option>
+                    @foreach($availableGroups as $availableGroup)
+                        <option value="{{ $availableGroup['id'] }}">{{ $availableGroup['name'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="filter-field">
+                <label for="filterAssignee">Responsavel</label>
+                <select id="filterAssignee">
+                    <option value="all">Todos</option>
+                </select>
+            </div>
+            <div class="filter-field">
+                <label for="filterStatus">Status</label>
+                <select id="filterStatus">
+                    <option value="all">Todos</option>
+                    <option value="nao-iniciado">Nao iniciado</option>
+                    <option value="em-andamento">Em andamento</option>
+                    <option value="prorrogado">Prorrogado</option>
+                    <option value="concluido">Concluido</option>
+                </select>
+            </div>
+            <div class="filter-field">
+                <label for="filterScope">Escopo</label>
+                <select id="filterScope">
+                    <option value="all">Tudo que posso ver</option>
+                    <option value="mine">Minhas criacoes</option>
+                    <option value="shared">Compartilhadas</option>
+                </select>
+            </div>
+            <button class="button-secondary" id="clearFilters" type="button">Limpar</button>
+        </section>
+
         <div class="board" id="kanbanBoard">
-            <section class="column" data-status="nao-iniciado"><div><h2>Nao iniciado</h2><small>Novas tarefas aguardam definicao.</small></div><div class="column-body" id="board-nao-iniciado"></div></section>
-            <section class="column" data-status="em-andamento"><div><h2>Em andamento</h2><small>Tarefas em progresso.</small></div><div class="column-body" id="board-em-andamento"></div></section>
-            <section class="column" data-status="prorrogado"><div><h2>Prorrogado</h2><small>Tarefas adiadas.</small></div><div class="column-body" id="board-prorrogado"></div></section>
-            <section class="column" data-status="concluido"><div><h2>Concluido</h2><small>Itens finalizados.</small></div><div class="column-body" id="board-concluido"></div></section>
+            <section class="column" data-status="nao-iniciado"><div><div class="column-title"><h2>Nao iniciado</h2><span class="column-count" id="count-nao-iniciado">0</span></div><small>Novas tarefas aguardam definicao.</small></div><div class="column-body" id="board-nao-iniciado"></div></section>
+            <section class="column" data-status="em-andamento"><div><div class="column-title"><h2>Em andamento</h2><span class="column-count" id="count-em-andamento">0</span></div><small>Tarefas em progresso.</small></div><div class="column-body" id="board-em-andamento"></div></section>
+            <section class="column" data-status="prorrogado"><div><div class="column-title"><h2>Prorrogado</h2><span class="column-count" id="count-prorrogado">0</span></div><small>Tarefas adiadas.</small></div><div class="column-body" id="board-prorrogado"></div></section>
+            <section class="column" data-status="concluido"><div><div class="column-title"><h2>Concluido</h2><span class="column-count" id="count-concluido">0</span></div><small>Itens finalizados.</small></div><div class="column-body" id="board-concluido"></div></section>
         </div>
     </div>
 
@@ -146,6 +235,18 @@
         const taskDescription = document.getElementById('taskDescription');
         const saveTaskButton = document.getElementById('saveTaskButton');
         const deleteTaskButton = document.getElementById('deleteTaskButton');
+        const filterSearch = document.getElementById('filterSearch');
+        const filterGroup = document.getElementById('filterGroup');
+        const filterAssignee = document.getElementById('filterAssignee');
+        const filterStatus = document.getElementById('filterStatus');
+        const filterScope = document.getElementById('filterScope');
+        const clearFilters = document.getElementById('clearFilters');
+        const counters = {
+            'nao-iniciado': document.getElementById('count-nao-iniciado'),
+            'em-andamento': document.getElementById('count-em-andamento'),
+            'prorrogado': document.getElementById('count-prorrogado'),
+            'concluido': document.getElementById('count-concluido')
+        };
 
         const requestJson = async (url, options = {}) => {
             const response = await fetch(url, {
@@ -166,7 +267,7 @@
 
         const createCard = task => {
             const card = document.createElement('article');
-            card.className = 'task-card';
+            card.className = `task-card status-${task.status}-card`;
             card.draggable = !!task.canEdit;
             card.dataset.editable = task.canEdit ? 'true' : 'false';
             card.dataset.id = task.id;
@@ -198,9 +299,67 @@
             return card;
         };
 
+        const normalize = value => String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+        const refreshAssigneeOptions = () => {
+            const current = filterAssignee.value;
+            const assignees = [...new Set(tasks.map(task => task.assignee).filter(Boolean))]
+                .sort((a, b) => a.localeCompare(b));
+
+            filterAssignee.innerHTML = '<option value="all">Todos</option>';
+            assignees.forEach(assignee => {
+                const option = document.createElement('option');
+                option.value = assignee;
+                option.textContent = assignee;
+                filterAssignee.appendChild(option);
+            });
+
+            if (assignees.includes(current)) {
+                filterAssignee.value = current;
+            }
+        };
+
+        const getFilteredTasks = () => {
+            const search = normalize(filterSearch.value);
+            const group = filterGroup.value;
+            const assignee = filterAssignee.value;
+            const status = filterStatus.value;
+            const scope = filterScope.value;
+
+            return tasks.filter(task => {
+                const haystack = normalize([
+                    task.title,
+                    task.description,
+                    task.requester,
+                    task.assignee,
+                    task.section,
+                    task.owner,
+                    task.groupName
+                ].join(' '));
+
+                const matchesSearch = !search || haystack.includes(search);
+                const matchesGroup = group === 'all' || (group === 'private' ? !task.groupId : String(task.groupId) === group);
+                const matchesAssignee = assignee === 'all' || task.assignee === assignee;
+                const matchesStatus = status === 'all' || task.status === status;
+                const matchesScope = scope === 'all'
+                    || (scope === 'mine' && task.isOwner)
+                    || (scope === 'shared' && !task.isOwner && task.groupId);
+
+                return matchesSearch && matchesGroup && matchesAssignee && matchesStatus && matchesScope;
+            });
+        };
+
         const renderBoard = () => {
             Object.values(board).forEach(column => column.innerHTML = '');
-            tasks.forEach(task => board[task.status]?.appendChild(createCard(task)));
+            Object.values(counters).forEach(counter => counter.textContent = '0');
+
+            const visibleTasks = getFilteredTasks();
+            visibleTasks.forEach(task => {
+                board[task.status]?.appendChild(createCard(task));
+                if (counters[task.status]) {
+                    counters[task.status].textContent = Number(counters[task.status].textContent) + 1;
+                }
+            });
         };
 
         const openModal = (task = null) => {
@@ -238,6 +397,7 @@
             });
             tasks = id ? tasks.map(task => task.id === saved.id ? saved : task) : [saved, ...tasks];
             closeModal();
+            refreshAssigneeOptions();
             renderBoard();
         };
 
@@ -246,6 +406,7 @@
             await requestJson(`${appBaseUrl}/tasks/${id}`, { method: 'DELETE' });
             tasks = tasks.filter(task => task.id !== Number(id));
             closeModal();
+            refreshAssigneeOptions();
             renderBoard();
         };
 
@@ -271,10 +432,35 @@
         });
 
         document.getElementById('openAddTaskModal').addEventListener('click', () => openModal());
+        const groupsMenuButton = document.getElementById('groupsMenuButton');
+        const groupsMenu = groupsMenuButton.closest('.navbar-section');
+        groupsMenuButton.addEventListener('click', event => {
+            event.stopPropagation();
+            const isOpen = groupsMenu.classList.toggle('open');
+            groupsMenuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+        document.addEventListener('click', event => {
+            if (!groupsMenu.contains(event.target)) {
+                groupsMenu.classList.remove('open');
+                groupsMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
         document.getElementById('closeModal').addEventListener('click', closeModal);
         document.getElementById('cancelModal').addEventListener('click', closeModal);
         saveTaskButton.addEventListener('click', () => saveTask().catch(alert));
         deleteTaskButton.addEventListener('click', () => deleteTask(taskIdInput.value).catch(alert));
+        [filterSearch, filterGroup, filterAssignee, filterStatus, filterScope].forEach(field => {
+            field.addEventListener('input', renderBoard);
+            field.addEventListener('change', renderBoard);
+        });
+        clearFilters.addEventListener('click', () => {
+            filterSearch.value = '';
+            filterGroup.value = 'all';
+            filterAssignee.value = 'all';
+            filterStatus.value = 'all';
+            filterScope.value = 'all';
+            renderBoard();
+        });
         modalOverlay.addEventListener('click', event => { if (event.target === modalOverlay) closeModal(); });
         document.getElementById('themeToggle').addEventListener('click', () => {
             const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
@@ -282,6 +468,7 @@
             localStorage.setItem('kanbanTheme', next);
         });
         document.documentElement.dataset.theme = localStorage.getItem('kanbanTheme') || 'dark';
+        refreshAssigneeOptions();
         renderBoard();
     </script>
 </body>

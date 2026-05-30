@@ -191,6 +191,57 @@ Route::post('/admin/users', function (Request $request) {
     return back()->with('success', 'Usuario criado com sucesso.');
 });
 
+Route::put('/admin/users/{user}', function (Request $request, User $user) {
+    $sessionUser = session('user');
+
+    if (! $sessionUser || ! $sessionUser['is_admin']) {
+        return redirect()->to(url('/login'))->with('error', 'Acesso restrito ao administrador.');
+    }
+
+    $data = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+        'password' => 'nullable|string|min:8',
+        'is_admin' => 'nullable|in:1',
+        'group_roles' => 'nullable|array',
+        'group_roles.*' => 'nullable|in:none,viewer,editor,admin',
+    ]);
+
+    $payload = [
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'is_admin' => isset($data['is_admin']),
+    ];
+
+    if ((int) $sessionUser['id'] === (int) $user->id) {
+        $payload['is_admin'] = true;
+    }
+
+    if (! empty($data['password'])) {
+        $payload['password'] = $data['password'];
+    }
+
+    $user->update($payload);
+
+    $sync = collect($data['group_roles'] ?? [])
+        ->filter(fn ($role) => in_array($role, ['viewer', 'editor', 'admin'], true))
+        ->mapWithKeys(fn ($role, $groupId) => [(int) $groupId => ['role' => $role]])
+        ->all();
+
+    $user->groups()->sync($sync);
+
+    if ((int) $sessionUser['id'] === (int) $user->id) {
+        session(['user' => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'is_admin' => true,
+        ]]);
+    }
+
+    return back()->with('success', 'Usuario atualizado com sucesso.');
+});
+
 Route::get('/sistema', function () use ($currentUser, $loginRedirect, $visibleTasks, $serializeTask, $groupPayload) {
     $user = $currentUser();
 
@@ -205,6 +256,73 @@ Route::get('/sistema', function () use ($currentUser, $loginRedirect, $visibleTa
         'groups' => $groups,
         'shareGroups' => $groups->whereIn('role', ['editor', 'admin'])->values(),
         'tasks' => $visibleTasks($user)->map(fn (Task $task) => $serializeTask($task, $user))->values(),
+    ]);
+});
+
+Route::get('/dashboard', function () use ($currentUser) {
+    $user = $currentUser();
+
+    if (! $user || ! $user->is_admin) {
+        return redirect()->to(url('/login'))->with('error', 'Acesso restrito ao administrador.');
+    }
+
+    $statuses = [
+        'nao-iniciado' => 'Nao iniciado',
+        'em-andamento' => 'Em andamento',
+        'prorrogado' => 'Prorrogado',
+        'concluido' => 'Concluido',
+    ];
+
+    $tasks = Task::with(['creator', 'group'])->get();
+    $statusTotals = collect($statuses)
+        ->mapWithKeys(fn ($label, $status) => [$status => $tasks->where('status', $status)->count()]);
+
+    $groups = Group::with('users')->orderBy('name')->get();
+    $groupRows = $groups->map(function (Group $group) use ($statuses, $tasks) {
+        $groupTasks = $tasks->where('group_id', $group->id);
+
+        return [
+            'name' => $group->name,
+            'slug' => $group->slug,
+            'members' => $group->users->count(),
+            'total' => $groupTasks->count(),
+            'statuses' => collect($statuses)->mapWithKeys(fn ($label, $status) => [$status => $groupTasks->where('status', $status)->count()]),
+        ];
+    });
+
+    $privateTasks = $tasks->whereNull('group_id');
+    $privateRow = [
+        'name' => 'Privadas',
+        'slug' => null,
+        'members' => '-',
+        'total' => $privateTasks->count(),
+        'statuses' => collect($statuses)->mapWithKeys(fn ($label, $status) => [$status => $privateTasks->where('status', $status)->count()]),
+    ];
+
+    $users = User::with('groups')->orderBy('name')->get();
+    $userRows = $users->map(function (User $listedUser) use ($statuses, $tasks) {
+        $userTasks = $tasks->where('created_by', $listedUser->id);
+
+        return [
+            'name' => $listedUser->name,
+            'email' => $listedUser->email,
+            'is_admin' => $listedUser->is_admin,
+            'groups' => $listedUser->groups->count(),
+            'total' => $userTasks->count(),
+            'statuses' => collect($statuses)->mapWithKeys(fn ($label, $status) => [$status => $userTasks->where('status', $status)->count()]),
+        ];
+    });
+
+    return view('dashboard', [
+        'user' => session('user'),
+        'statuses' => $statuses,
+        'statusTotals' => $statusTotals,
+        'totalTasks' => $tasks->count(),
+        'totalGroups' => $groups->count(),
+        'totalUsers' => $users->count(),
+        'privateTasks' => $privateTasks->count(),
+        'groupRows' => $groupRows->push($privateRow),
+        'userRows' => $userRows,
     ]);
 });
 
