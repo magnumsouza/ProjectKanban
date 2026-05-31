@@ -8,11 +8,11 @@ SISKanban e um sistema web de controle de tarefas em modelo Kanban, desenvolvido
 
 | Tela | Print |
 | --- | --- |
-| Login | ![Tela de login](docs/screenshots/login.png) |
-| Painel Kanban | ![Painel Kanban](docs/screenshots/kanban.png) |
-| Dashboard administrativo | ![Dashboard administrativo](docs/screenshots/dashboard.png) |
-| Gestao de grupos | ![Gestao de grupos](docs/screenshots/grupos.png) |
-| Gestao de usuarios | ![Gestao de usuarios](docs/screenshots/usuarios.png) |
+| Login | ![Tela de login](https://github.com/magnumsouza/ProjectKanban/blob/main/docs/screenshots/login.png?raw=true) |
+| Painel Kanban | ![Painel Kanban](https://github.com/magnumsouza/ProjectKanban/blob/main/docs/screenshots/kanban.png?raw=true) |
+| Dashboard administrativo | ![Dashboard administrativo](https://github.com/magnumsouza/ProjectKanban/blob/main/docs/screenshots/dashboard.png?raw=true) |
+| Gestao de grupos | ![Gestao de grupos](https://github.com/magnumsouza/ProjectKanban/blob/main/docs/screenshots/grupos.png?raw=true) |
+| Gestao de usuarios | ![Gestao de usuarios](https://github.com/magnumsouza/ProjectKanban/blob/main/docs/screenshots/usuarios.png?raw=true) |
 
 ## Funcionalidades
 
