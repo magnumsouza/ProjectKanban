@@ -1,59 +1,152 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SISKanban
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+SISKanban e um sistema web de controle de tarefas em modelo Kanban, desenvolvido em Laravel. O projeto permite organizar demandas por status, controlar visibilidade por grupos e administrar usuarios, perfis e permissoes.
 
-## About Laravel
+## Prints do projeto
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> Coloque os arquivos de captura na pasta `docs/screenshots/` usando os nomes abaixo para que as imagens aparecam automaticamente nesta secao.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Tela | Print |
+| --- | --- |
+| Login | ![Tela de login](docs/screenshots/login.png) |
+| Painel Kanban | ![Painel Kanban](docs/screenshots/kanban.png) |
+| Dashboard administrativo | ![Dashboard administrativo](docs/screenshots/dashboard.png) |
+| Gestao de grupos | ![Gestao de grupos](docs/screenshots/grupos.png) |
+| Gestao de usuarios | ![Gestao de usuarios](docs/screenshots/usuarios.png) |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Funcionalidades
 
-## Learning Laravel
+- Autenticacao por usuario/e-mail e senha.
+- Painel Kanban com quatro status: Nao iniciado, Em andamento, Prorrogado e Concluido.
+- Criacao, edicao, exclusao e movimentacao de tarefas entre colunas.
+- Filtros por busca, grupo, responsavel, status e escopo.
+- Tarefas privadas visiveis apenas para o criador.
+- Tarefas compartilhadas por grupos.
+- Controle de permissoes por grupo: visualizar, editar e administrar.
+- Criacao e administracao de grupos.
+- Inclusao, alteracao e remocao de membros nos grupos.
+- Administracao geral de usuarios por perfil administrador.
+- Dashboard administrativo com totais, distribuicao por status, tarefas por grupo e tarefas por usuario.
+- Alternancia de tema no painel principal.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Regras de acesso
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Administrador geral: acessa o dashboard, gerencia usuarios, ve todos os grupos e pode administrar todas as tarefas.
+- Administrador de grupo: gerencia membros do grupo e pode editar/excluir tarefas do grupo conforme as regras do sistema.
+- Editor de grupo: pode criar e editar tarefas compartilhadas no grupo.
+- Visualizador de grupo: pode visualizar tarefas compartilhadas no grupo.
+- Usuario comum: ve as proprias tarefas privadas e as tarefas dos grupos dos quais participa.
 
-## Laravel Sponsors
+## Tecnologias
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP 8.2+
+- Laravel 12
+- SQLite
+- Blade
+- JavaScript nativo
+- CSS customizado
 
-### Premium Partners
+## Requisitos
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- PHP 8.2 ou superior
+- Composer
+- Node.js e npm
+- Extensao SQLite habilitada no PHP
 
-## Contributing
+## Instalacao
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Instale as dependencias PHP:
 
-## Code of Conduct
+```bash
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. Instale as dependencias JavaScript:
 
-## Security Vulnerabilities
+```bash
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. Copie o arquivo de ambiente, se necessario:
 
-## License
+```bash
+cp .env.example .env
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. Gere a chave da aplicacao:
+
+```bash
+php artisan key:generate
+```
+
+5. Execute as migracoes e seeders:
+
+```bash
+php artisan migrate --seed
+```
+
+6. Compile os assets:
+
+```bash
+npm run build
+```
+
+7. Inicie o servidor local:
+
+```bash
+php artisan serve
+```
+
+Depois acesse `http://127.0.0.1:8000`.
+
+## Acessos de desenvolvimento
+
+Quando os seeders forem executados, os usuarios iniciais serao criados:
+
+| Perfil | Login | Senha |
+| --- | --- | --- |
+| Administrador | `admin@dtikanban.local` | `Admin123!` |
+| Usuario padrao | `user@dtikanban.local` | `User12345` |
+
+## Rotas principais
+
+- `/login`: tela de acesso.
+- `/sistema`: painel Kanban principal.
+- `/groups`: gestao de grupos e membros.
+- `/admin/users`: gestao de usuarios, disponivel para administradores.
+- `/dashboard`: dashboard administrativo.
+- `/kanban/{grupo}`: atalho para acessar o painel filtrado por grupo.
+
+## Estrutura relevante
+
+```text
+app/Models/Task.php
+app/Models/Group.php
+database/migrations/
+database/seeders/
+resources/views/login.blade.php
+resources/views/sistema.blade.php
+resources/views/dashboard.blade.php
+resources/views/admin-groups.blade.php
+resources/views/admin-users.blade.php
+routes/web.php
+public/images/
+docs/screenshots/
+```
+
+## Como atualizar os prints
+
+1. Rode o projeto localmente.
+2. Acesse cada tela principal.
+3. Capture a tela em PNG.
+4. Salve os arquivos com estes nomes:
+
+```text
+docs/screenshots/login.png
+docs/screenshots/kanban.png
+docs/screenshots/dashboard.png
+docs/screenshots/grupos.png
+docs/screenshots/usuarios.png
+```
+
+Ao manter esses nomes, o README exibira os prints automaticamente.
