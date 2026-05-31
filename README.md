@@ -101,12 +101,12 @@ Depois acesse `http://127.0.0.1:8000`.
 
 ## Acessos de desenvolvimento
 
-Quando os seeders forem executados, os usuarios iniciais serao criados:
+Quando os seeders forem executados, ajuste os acessos conforme o ambiente. Use valores ficticios na documentacao publica:
 
 | Perfil | Login | Senha |
 | --- | --- | --- |
-| Administrador | `admin@siskanban.local` | `Admin123!` |
-| Usuario padrao | `user@siskanban.local` | `User12345` |
+| Administrador | `admin@example.local` | `SenhaFicticia123` |
+| Usuario padrao | `usuario@example.local` | `SenhaFicticia123` |
 
 ## Rotas principais
 
