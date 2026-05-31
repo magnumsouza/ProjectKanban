@@ -105,7 +105,7 @@ Quando os seeders forem executados, os usuarios iniciais serao criados:
 
 | Perfil | Login | Senha |
 | --- | --- | --- |
-| Administrador | `admin@siskanba.local` | `Admin123!` |
+| Administrador | `admin@siskanban.local` | `Admin123!` |
 | Usuario padrao | `user@siskanban.local` | `User12345` |
 
 ## Rotas principais
